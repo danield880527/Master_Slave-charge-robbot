@@ -1,0 +1,50 @@
+unsigned long previousMillis = 0;
+const long interval =1000;
+String str;
+
+#define sensor A0
+#define magnet 13
+
+void setup() {
+Serial.begin(9600);
+pinMode(magnet, OUTPUT); 
+}
+
+ the loop function runs over and over again forever
+void loop() {
+
+float volts = analogRead(sensor)0.004882815;
+int distance = 13pow(volts,-1);
+delay(1000);
+
+if (distance = 30){
+  Serial.println(distance);
+}
+if (distance 30){
+  Serial.println(10000);
+}
+
+unsigned long currentMillis = millis();
+ if (currentMillis -previousMillis = interval){
+   previousMillis = currentMillis;
+   Serial.println(hello!);
+ }
+
+
+
+digitalWrite(magnet,HIGH);
+
+if(Serial.available()){
+  str = Serial.readStringUntil('n');
+
+  if(str == on){
+    digitalWrite(magnet, LOW);
+    Serial.println(201);
+  }
+  else if (str == off){
+    digitalWrite(magnet,HIGH);
+    Serial.println(200);
+  }
+}
+
+}

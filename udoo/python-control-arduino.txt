@@ -1,0 +1,57 @@
+import serial
+from time import sleep
+import sys
+
+robotstate = input('1 idel,2 busy').lower()
+ser = serial.Serial('/dev/ttyACM0', 9600)  
+
+try:
+	while True:
+		
+		while ser.in_waiting:
+			data_raw = ser.readline()
+			data = data_raw.decode().strip()
+			#print("catch:",data_raw)
+			#print("distance",data)
+			
+			data_num = int(data)
+			if data_num < 200 :
+				distance = data_num
+				print('distance',distance)
+				
+				if distance > 4 :
+					sleep(1)
+					print('distance>4')
+					
+				if distance < 4 :
+					ser.write(b'on\n')
+					print('distance<4')
+			else:
+				messenge = data
+				print('messenge',messenge)
+				if data_num == 200:
+					print('magnet off')
+				if data_num ==201:
+					print('magnet on')
+			
+			
+			
+			
+			
+			robotstate2 = int(robotstate)
+			print(robotstate)
+
+				
+			if robotstate2 == 1:
+				ser.write(b'off\n')
+				print('state=1 off')
+				
+			if robotstate2 == 2:
+				ser.write(b'on\n')
+				print('state=2 on')
+			
+except KeyboardInterrupt:
+	ser.write(b'off\n')
+	ser.close()
+	print('finish')
+
